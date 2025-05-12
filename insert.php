@@ -1,5 +1,9 @@
 <?php
 require_once 'connection.php';
+
+if (isset($_POST['submit'])) {
+  insert();
+}
 ?>
 
 <!doctype html>
@@ -18,16 +22,28 @@ require_once 'connection.php';
         <h1>Form Insert</h1>
       </div>
     </div>
-    <form>
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Judul</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    <form action="" method="post" enctype="multipart/form-data">
+      <div class="mb-1">
+        <label for="judul" class="form-label">Judul</label>
+        <input type="text" class="form-control" id="judul" aria-describedby="judulHelp" name="judul" required>
+      </div>
+      <div class="mb-1">
+        <label for="penulis" class="form-label">Penulis</label>
+        <input type="text" class="form-control" id="penulis" name="penulis" required>
+      </div>
+      <div class="mb-1">
+        <label for="penerbit" class="form-label">Penerbit</label>
+        <input type="text" class="form-control" id="penerbit" name="penerbit" required>
+      </div>
+      <div class="mb-1">
+        <label for="tahun_terbit" class="form-label">Tahun Terbit</label>
+        <input type="text" class="form-control" id="tahun_terbit" name="tahun_terbit" required>
       </div>
       <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Penulis</label>
-        <input type="password" class="form-control" id="exampleInputPassword1">
+        <label for="formFile" class="form-label">Cover</label>
+        <input class="form-control" type="file" id="formFile" name="cover">
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" name="submit" class="btn btn-primary">Submit</button>
     </form>
     </div>
 
