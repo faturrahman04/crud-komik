@@ -58,8 +58,16 @@ function insert() {
 
   move_uploaded_file($cover["tmp_name"], $targetFile);
 
-  
+  mysqli_query($conn, "INSERT INTO item VALUES ('', '$judul', '$penulis', '$penerbit', '$tahunTerbit', '$fixFilesName')");
 
+  return mysqli_affected_rows($conn);
+}
 
+function delete($id) {
+  global $conn;
+
+  mysqli_query($conn, "DELETE FROM item WHERE id = '$id'");
+
+  return mysqli_affected_rows($conn);
 }
 

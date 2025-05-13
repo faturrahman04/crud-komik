@@ -2,7 +2,12 @@
 require_once 'connection.php';
 
 if (isset($_POST['submit'])) {
-  insert();
+  if (insert() > 0) {
+    echo "<script>
+            alert('Data berhasil diinput!');
+          <script>";
+    header('Location: index.php');
+  } 
 }
 ?>
 

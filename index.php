@@ -50,8 +50,8 @@ $items = queryData("SELECT * FROM item");
           <?php foreach($items as $item) : ?>
           <tr>
             <th scope="row"><?= $no++ ?></th>
-            <td><a href="" class="btn btn-warning">Edit</a> | <a href="" class="btn btn-danger">Delete</a></td>
-            <td><img src="./img/<?= $item["gambar"] ?>" alt="" width="50"></td>
+            <td><a href="" class="btn btn-warning">Edit</a> | <a href="delete.php?id=<?= $item['id'] ?>" class="btn btn-danger">Delete</a></td>
+            <td><img src="./img/uploads/<?= $item["gambar"] ?>" alt="" width="50"></td>
             <td><?= $item["judul"] ?></td>
             <td><?= $item["penulis"] ?></td>
             <td><?= $item["penerbit"] ?></td>
