@@ -12,8 +12,14 @@ $items = queryData("SELECT * FROM item");
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Komicom</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
   </head>
   <style>
+    body {
+      font-family: "Winky Rough", sans-serif;
+    }
     tr > * {
       vertical-align: middle;
     }
@@ -50,7 +56,7 @@ $items = queryData("SELECT * FROM item");
           <?php foreach($items as $item) : ?>
           <tr>
             <th scope="row"><?= $no++ ?></th>
-            <td><a href="" class="btn btn-warning">Edit</a> | <a href="delete.php?id=<?= $item['id'] ?>" class="btn btn-danger">Delete</a></td>
+            <td><a href="edit.php?id=<?= $item['id'] ?>" class="btn btn-warning">Edit</a> | <a href="delete.php?id=<?= $item['id'] ?>" class="btn btn-danger">Delete</a></td>
             <td><img src="./img/uploads/<?= $item["gambar"] ?>" alt="" width="50"></td>
             <td><?= $item["judul"] ?></td>
             <td><?= $item["penulis"] ?></td>

@@ -71,3 +71,54 @@ function delete($id) {
   return mysqli_affected_rows($conn);
 }
 
+function update($id) {
+  global $conn;
+
+  $judul = $_POST['judul'];
+  $penulis = $_POST['penulis'];
+  $penerbit = $_POST['penerbit'];
+  $tahunTerbit = $_POST['tahun_terbit'];
+  $cover = $_FILES['cover'];
+
+  if ($cover["size"] > 2000000) {
+    echo "<script>
+            alert('Ukuran file tidak boleh dari 2MB');
+          </script>";
+    return;
+  }
+
+  // Jika user tidak mengupload gambar di form update, maka tetap menggunakan gambar yang lama
+  if ($cover["error"] === 4) {
+    $fileLama = $_POST['old_cover'];
+    mysqli_query($conn, "UPDATE item 
+                       SET judul = '$judul',
+                       penulis = '$penulis',
+                       penerbit = '$penerbit',
+                       tahun_terbit = '$tahunTerbit',
+                       gambar = '$fileLama'
+                       WHERE id = '$id'");
+    return mysqli_affected_rows($conn);
+  } 
+
+  // Validasi ekstensi/type file
+  $ekstenseFileValid = ['jpg', 'jpeg', 'png'];
+  $typeEkstensi = $cover["type"];
+  $type = explode('/', $typeEkstensi);
+
+  if (!array_search(end($type), $ekstenseFileValid)) {
+    echo "<script>
+            alert('Ekstensi file tidak valid');
+          </script>";
+    return;
+  }
+  // Validasi ekstensi/type file
+    $generateName = uniqid();
+    $fixFilesName = $generateName . "." . end($type);
+    $targetDir = "./img/uploads/";
+    $targetFile = $targetDir . $fixFilesName;
+
+  move_uploaded_file($cover["tmp_name"], $targetFile);
+
+  return mysqli_affected_rows($conn);
+}
+
