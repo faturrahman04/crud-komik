@@ -1,7 +1,12 @@
 <?php
 require_once 'connection.php';
 
-$items = queryData("SELECT * FROM item");
+if (isset($_GET["search"])) {
+  $keyword = $_GET["search"];
+  $items = searchData($keyword);
+} else {
+  $items = queryData("SELECT * FROM item");
+}
 
 ?>
 
@@ -30,6 +35,13 @@ $items = queryData("SELECT * FROM item");
       <div class="row mt-5">
         <div class="col">
           <h1>Daftar Komik</h1>
+          <form action="" method="get">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Cari Komik" aria-label="Cari Komik" aria-describedby="button-addon2" name="search">
+              <button class="btn btn-outline-primary" type="submit" id="button-addon2" name="submit">Search</button>
+            </div>
+            <p style="margin-top: -1rem; color: red;">Note : Pencarian difilter berdasarkan Judul, Penulis dan Penerbit</p>
+          </form>
         </div>
       </div>
 

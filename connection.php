@@ -122,3 +122,45 @@ function update($id) {
   return mysqli_affected_rows($conn);
 }
 
+function searchData($keyword) {
+  return queryData("SELECT * FROM item WHERE 
+                    judul LIKE '%$keyword%'
+                    OR penulis LIKE '%$keyword%'
+                    OR penerbit LIKE '%$keyword%'");
+}
+
+function signUp() {
+  session_start();
+  global $conn;
+
+  $email = $_POST["email"];
+  $password = $_POST["password"];
+  $confirmPassword = $_POST["confirm_password"];
+
+  if ($email === '') {
+    echo "<script>
+            alert('Email tidak boleh kosong!');
+          </script>";
+    return;
+  }
+
+  if ($password === '') {
+    echo "<script>
+            alert('Password wajib diisi!');
+          </script>";
+    return;
+  }
+
+  $isEmailExist = mysqli_query($conn, "SELECT * FROM user WHERE email = '$email'");
+  if (mysqli_num_rows($isEmailExist)) {
+    $_SESSION["error"] = "Email sudah digunakan";
+    return $_SESSION["error"];
+  }
+  ;
+
+}
+
+function login() {
+
+}
+
