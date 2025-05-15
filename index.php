@@ -1,5 +1,10 @@
 <?php
+session_start();
 require_once 'connection.php';
+
+if (!isset($_SESSION['login'])) {
+  header('Location: login.php');
+}
 
 if (isset($_GET["search"])) {
   $keyword = $_GET["search"];
@@ -30,8 +35,8 @@ if (isset($_GET["search"])) {
     }
   </style>
   <body>
-    <div class="container">
-
+    <a href="./logout.php" style="color: red; position: absolute; right: 2rem; top: 1rem;">Logout</a>
+    <div class="container" style="position: relative;">
       <div class="row mt-5">
         <div class="col">
           <h1>Daftar Komik</h1>
@@ -45,7 +50,7 @@ if (isset($_GET["search"])) {
         </div>
       </div>
 
-      <div class="row">
+      <div class="row border">
         <div class="col">
           <a href="insert.php" class="btn btn-outline-info">Insert New Komik</a>
         </div>

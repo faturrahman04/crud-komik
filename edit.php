@@ -1,5 +1,9 @@
 <?php
+session_start();
 require 'connection.php';
+if (!isset($_SESSION['login'])) {
+  header('Location: login.php');
+}
 
 $id = $_GET['id'];
 

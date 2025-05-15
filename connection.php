@@ -17,10 +17,10 @@ function queryData($query) {
 
 function insert() {
   global $conn;
-  $judul = $_POST['judul'];
-  $penulis = $_POST['penulis'];
-  $penerbit = $_POST['penerbit'];
-  $tahunTerbit = $_POST['tahun_terbit'];
+  $judul = htmlspecialchars($_POST['judul']);
+  $penulis = htmlspecialchars($_POST['penulis']);
+  $penerbit = htmlspecialchars($_POST['penerbit']);
+  $tahunTerbit = htmlspecialchars($_POST['tahun_terbit']);
   $cover = $_FILES['cover'];
 
   // Validasi required file
@@ -130,10 +130,11 @@ function searchData($keyword) {
 }
 
 function signUp() {
-  session_start();
   global $conn;
 
   $email = $_POST["email"];
+  $username = explode('@', $email);
+  $username = $username[0];
   $password = $_POST["password"];
   $confirmPassword = $_POST["confirm_password"];
 
@@ -152,15 +153,22 @@ function signUp() {
   }
 
   $isEmailExist = mysqli_query($conn, "SELECT * FROM user WHERE email = '$email'");
-  if (mysqli_num_rows($isEmailExist)) {
-    $_SESSION["error"] = "Email sudah digunakan";
-    return $_SESSION["error"];
+  if (mysqli_num_rows($isEmailExist) > 0) {
+    $_SESSION["error"] = 'Email sudah digunakan';
+  } else {
+    $_SESSION["error"] = '';
+  };
+
+  if ($password !== $confirmPassword) {
+    $_SESSION["invalid_password"] = 'Password tidak sesuai';
+  } else {
+    $_SESSION["invalid_password"] = '';
   }
-  ;
 
-}
+  $hashingPassword = password_hash($password, PASSWORD_BCRYPT);
 
-function login() {
+  mysqli_query($conn, "INSERT INTO user VALUE ('', '$username', '$email', '$hashingPassword')");
 
+  return mysqli_affected_rows($conn);
 }
 
